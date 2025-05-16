@@ -1,8 +1,8 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
-from database import SessionLocal, get_db
-from models.user import User, Role
-from schemas.user import UserCreate, UserOut
+from .database import SessionLocal, get_db
+from .models.user import User, Role
+from .schemas.user import UserCreate, UserOut
 from passlib.context import CryptContext
 
 app = FastAPI(title="Gestor de Finanzas Personales")
