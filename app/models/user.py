@@ -1,9 +1,9 @@
 from sqlalchemy import Column, Integer, String, Enum, Boolean, DateTime
+from app.database import Base
 from sqlalchemy.sql import func
-from ..database import Base
-import enum
+from enum import Enum as PyEnum
 
-class Role(enum.Enum):
+class Role(PyEnum):
     client = "client"
     editor = "editor"
     admin = "admin"
@@ -14,6 +14,6 @@ class User(Base):
     email = Column(String(255), unique=True, nullable=False)
     password_hash = Column(String(255), nullable=False)
     phone = Column(String(20))
+    role = Column(Enum(Role), default=Role.client)
     is_verified = Column(Boolean, default=False)
-    role = Column(Enum(Role), nullable=False, default=Role.client)
     created_at = Column(DateTime, server_default=func.now())

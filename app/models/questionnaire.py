@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, Enum, DateTime, DECIMAL, ForeignKey, JSON
 from sqlalchemy.sql import func
-from .database import Base
+from ..database import Base
 import enum
 
 class EmploymentStatus(enum.Enum):
