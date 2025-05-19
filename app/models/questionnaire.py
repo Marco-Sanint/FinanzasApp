@@ -1,18 +1,16 @@
-from sqlalchemy import Column, Integer, Enum, DateTime, DECIMAL, ForeignKey, JSON
+from sqlalchemy import Column, Integer, JSON, DateTime
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.sql import func
-from ..database import Base
-import enum
 
-class EmploymentStatus(enum.Enum):
-    none = "none"
-    part_time = "part_time"
-    full_time = "full_time"
+Base = declarative_base()
 
 class Questionnaire(Base):
     __tablename__ = "questionnaires"
-    id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    employment_status = Column(Enum(EmploymentStatus), nullable=False)
-    monthly_income = Column(DECIMAL(10, 2), nullable=False)
-    estimated_expenses = Column(JSON, nullable=False)
-    created_at = Column(DateTime, server_default=func.now())
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, nullable=False, index=True)
+    ans1 = Column(JSON, nullable=False)
+    ans2 = Column(JSON, nullable=False)
+    ans3 = Column(JSON, nullable=False)
+    ans4 = Column(JSON, nullable=False)
+    monthly_report = Column(JSON, nullable=True)
+    created_at = Column(DateTime(timezone=True), nullable=True, server_default=func.now())
