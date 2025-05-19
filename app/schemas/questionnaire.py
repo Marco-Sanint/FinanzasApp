@@ -1,20 +1,21 @@
 from pydantic import BaseModel
 from typing import Optional, List
+from datetime import datetime
 
 class ExpenseEntry(BaseModel):
-    description: str  # Descripción del gasto (e.g., "Compra de supermercado")
-    amount: float  # Monto del gasto (e.g., 150000.00)
+    description: str
+    amount: float
 
 class MonthlyReportUpdate(BaseModel):
-    expense: ExpenseEntry  # Nueva entrada de gasto a agregar
+    expense: ExpenseEntry
 
 class QuestionnaireCreate(BaseModel):
     user_id: int
-    ans1: dict  # {"sources": ["Trabajo propio", "Apoyo de padres"]}
-    ans2: dict  # {"exact_amount": 1700000.00}
-    ans3: dict  # {"gastos": ["arriendo", "mercado", ...]}
-    ans4: dict  # {"answer": "yes"}
-    monthly_report: Optional[dict] = None  # {"entries": [...], "total": 5000.00}
+    ans1: dict
+    ans2: dict
+    ans3: dict
+    ans4: dict
+    monthly_report: Optional[dict] = None
 
     class Config:
         schema_extra = {
@@ -26,4 +27,20 @@ class QuestionnaireCreate(BaseModel):
                 "ans4": {"answer": "yes"},
                 "monthly_report": None
             }
+        }
+
+class QuestionnaireOut(BaseModel):
+    id: int
+    user_id: int
+    ans1: dict
+    ans2: dict
+    ans3: dict
+    ans4: dict
+    monthly_report: Optional[dict]
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
+        json_encoders = {
+            datetime: lambda v: v.isoformat()
         }
