@@ -1,13 +1,14 @@
-from sqlalchemy import Column, Integer, Date, DateTime, ForeignKey, JSON
+from sqlalchemy import Column, Integer, JSON, Date, DateTime, ForeignKey
 from sqlalchemy.sql import func
-from ..database import Base
+from app.database import Base
 
 class Budget(Base):
     __tablename__ = "budgets"
-    id = Column(Integer, primary_key=True, index=True)
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     period = Column(Date, nullable=False)
-    recommended_budget = Column(JSON)
-    actual_expenses = Column(JSON)
-    report = Column(JSON)
-    created_at = Column(DateTime, server_default=func.now())
+    recommended_budget = Column(JSON, nullable=True, default={})  # Ej: {"name": "50/30/20", "distribution": {"Necesidades": 500000, ...}}
+    actual_expenses = Column(JSON, nullable=True, default=[])  # Lista de gastos reales
+    report = Column(JSON, nullable=True, default={})  # Reporte generado
+    created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=True)

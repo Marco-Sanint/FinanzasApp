@@ -25,7 +25,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 # Clave secreta y algoritmo para JWT (deberías mover esto a variables de entorno en producción)
 SECRET_KEY = "finanzasApp"  # Cambia esto por una clave segura
 ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+ACCESS_TOKEN_EXPIRE_MINUTES = 120
 
 # Crear token JWT
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
